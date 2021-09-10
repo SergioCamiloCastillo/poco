@@ -1,0 +1,28 @@
+.header{
+    position: relative;
+    
+    z-index: 1;
+    .ui.menu .ui.dropdown .menu > .item:hover::before{
+        width: 5px;
+    }
+    .ui.menu .ui.dropdown .menu > .item::before{
+      
+        
+        content: "";
+-webkit-transition: all ease-in-out .2s;
+transition: all ease-in-out .2s;
+width: 0;
+height: 5px;
+position: absolute;
+top: 50%;
+left: 3px;
+-webkit-transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+transform: translate(-50%,-50%);
+display: block !important;
+background-color:$primary;
+    }
+    .ui.menu .ui.dropdown .menu > .item a:hover{
+        padding-left: 13px;
+    }
+}
