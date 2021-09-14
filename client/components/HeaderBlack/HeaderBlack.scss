@@ -1,0 +1,32 @@
+.header-black {
+    background: #ffc222;
+    height: 30px;
+    margin: auto;
+    padding: 0 50px;
+
+    .wide {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .ui.grid {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .contact {
+        display: flex;
+        font-weight: 600;
+        color: #fff;
+
+        &__phone {
+
+
+            margin-right: 40px;
+
+        }
+
+    }
+
+}
