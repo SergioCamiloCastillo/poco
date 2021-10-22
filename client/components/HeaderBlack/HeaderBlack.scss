@@ -28,5 +28,17 @@
         }
 
     }
+    .social-links{
+        text-align: right;
+        a{
+            color:#fff;
+            margin-left: 20px;
+            transition: 0.5s;
 
+            &:hover{
+                color:$secondary;
+                transition: 0.5s;
+            }
+        }
+    }
 }

@@ -1,10 +1,18 @@
 
 import { Grid } from 'semantic-ui-react'
 import { Image as ImageSemantic } from 'semantic-ui-react';
-import { faHamburger, faPizzaSlice, faHotdog, faDrumstickBite, faBicycle, faSearch,faUser,faHeart,faShoppingBasket, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faHamburger, faPizzaSlice, faHotdog, faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { Button, Form, Modal, Input } from 'semantic-ui-react'
+import { useState } from 'react';
+import BasicModal from '../Modal/BasicModal/';
+import Auth from '../Auth/';
 export default function Header() {
+    const [open, setOpen] = useState(false);
+    const [titleModal, setTitleModal] = useState("Iniciar Sesión");
+    const [showModal, setShowModal] = useState(false);
+    const changeShowModal = () => setShowModal(!showModal);
+    const onCloseModal = () => setShowModal(false);
     return (
         <div className='header'>
             <Grid>
@@ -73,7 +81,7 @@ export default function Header() {
                 <Grid.Column mobile={16} tablet={16} computer={7}>
                     <div class='other-services'>
                         <div className='other-services__call-order'>
-                            <div className='logo'><FontAwesomeIcon size="3x" icon={faBicycle} /></div>
+                            <div className='logo'><FontAwesomeIcon size="3x" icon={faMotorcycle} /></div>
                             <div>
                                 <p class='title-call-order'>Llámanos y ordena</p>
                                 <p class='number'>+601 5410113</p>
@@ -81,8 +89,39 @@ export default function Header() {
 
                         </div>
                         <div className='other-services__shop'>
-                            <a><FontAwesomeIcon size="lg" icon={faSearch} /></a>
-                            <a><FontAwesomeIcon size="lg" icon={faUser} /></a>
+                            <Form>
+                                <BasicModal title={titleModal} show={showModal} setShow={setShowModal} size="small"><Auth onCloseModal={onCloseModal} setTitleModal={setTitleModal} /></BasicModal>
+
+                                <Modal
+
+                                    onClose={() => setOpen(false)}
+                                    onOpen={() => setOpen(true)}
+                                    open={open}
+                                    trigger={<a><FontAwesomeIcon size="lg" icon={faSearch} /></a>}
+                                >
+
+                                    <Modal.Content image>
+                                        <Modal.Description>
+                                            <Form.Field
+                                                width={12}
+                                                id='form-input-control-first-name'
+                                                control={Input}
+                                                label='Buscar producto: '
+                                                placeholder='Buscar...'
+                                            />
+                                        </Modal.Description>
+                                        <Modal.Actions>
+
+                                            <Button onClick={() => setOpen(false)} positive>
+                                                Buscar
+                                            </Button>
+                                        </Modal.Actions>
+                                    </Modal.Content>
+
+                                </Modal>
+                            </Form>
+
+                            <a onClick={changeShowModal}><FontAwesomeIcon size="lg" icon={faUser} /></a>
                             <a><FontAwesomeIcon size="lg" icon={faHeart} /></a>
                             <a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a>
                         </div>
