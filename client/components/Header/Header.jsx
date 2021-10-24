@@ -1,18 +1,31 @@
 
 import { Grid } from 'semantic-ui-react'
 import { Image as ImageSemantic } from 'semantic-ui-react';
-import { faHamburger, faPizzaSlice, faHotdog, faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faHamburger, faPizzaSlice, faHotdog,faPowerOff,faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Form, Modal, Input } from 'semantic-ui-react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BasicModal from '../Modal/BasicModal/';
 import Auth from '../Auth/';
+import useAuth from 'hooks/useAuth';
+import { getMeApi } from 'api/user';
+import Link from 'next/link'
+
 export default function Header() {
     const [open, setOpen] = useState(false);
     const [titleModal, setTitleModal] = useState("Iniciar Sesión");
+    const [user, setUser] = useState(undefined);
     const [showModal, setShowModal] = useState(false);
     const changeShowModal = () => setShowModal(!showModal);
     const onCloseModal = () => setShowModal(false);
+    const { logout, auth } = useAuth();
+    useEffect(() => {
+        (async () => {
+            const response = await getMeApi(logout);
+            setUser(response);
+        })()
+        //esta funcion anomima para que se llame asimisma
+    }, [auth])
     return (
         <div className='header'>
             <Grid>
@@ -24,14 +37,14 @@ export default function Header() {
                         <div className="menu-item-without-submenu">
 
                             <div className="menu-text">
-                                <a href="/">Home</a>
+                                <Link href="/"><a href="/">Home</a></Link>
                             </div>
 
                         </div>
                         <div className="menu-item">
 
                             <div className="menu-text">
-                                <a href="#">Menú <FontAwesomeIcon icon={faChevronDown} /></a>
+                                <Link href="/products"><a href="#">Menú <FontAwesomeIcon icon={faChevronDown} /></a></Link>
                             </div>
                             <div className="sub-menu">
                                 <div className="icon-box">
@@ -65,14 +78,25 @@ export default function Header() {
                         <div className="menu-item-without-submenu">
 
                             <div className="menu-text">
-                                <a href="/">Nosotros</a>
+                                <Link href="/about"><a href="/">Nosotros</a></Link>
                             </div>
 
                         </div>
+                        {/*  {
+                            user.tipo_usuario == 3 && 
+                        } * */}
+                        {user?.tipo_usuario === 3 && <div className="menu-item-without-submenu">
+
+                            <div className="menu-text">
+                                <Link href="/orders"><a href="/">Pedidos</a></Link>
+                            </div>
+
+                        </div>}
+
                         <div className="menu-item-without-submenu">
 
                             <div className="menu-text">
-                                <a href="/">Contácto</a>
+                                <Link href="/contact"><a href="/">Contácto</a></Link>
                             </div>
 
                         </div>
@@ -121,9 +145,13 @@ export default function Header() {
                                 </Modal>
                             </Form>
 
-                            <a onClick={changeShowModal}><FontAwesomeIcon size="lg" icon={faUser} /></a>
-                            <a><FontAwesomeIcon size="lg" icon={faHeart} /></a>
-                            <a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a>
+                            {user && <Link href='account'><a><FontAwesomeIcon size="lg" icon={faUser} /></a></Link>}
+
+
+                            <Link href="/wishlist"><a><FontAwesomeIcon size="lg" icon={faHeart} /></a></Link>
+                            <Link href="/cart"><a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a></Link>
+                            {user ? <a onClick={logout}><FontAwesomeIcon size="lg" icon={faPowerOff} /></a> : <a onClick={changeShowModal}><FontAwesomeIcon size="lg" icon={faSignInAlt} /></a>}
+
                         </div>
 
                     </div>

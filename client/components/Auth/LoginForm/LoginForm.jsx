@@ -3,11 +3,17 @@ import { Form, Button } from "semantic-ui-react";
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { loginApi } from 'api/user';
+import { loginApi, resetPasswordApi } from 'api/user';
+import useAuth from 'hooks/useAuth';
 
 export default function LoginForm(props) {
     const { handleRegisterForm, onCloseModal } = props;
     const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
+    const [showError, setShowError] = useState(false);
+
+
+
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
@@ -16,8 +22,8 @@ export default function LoginForm(props) {
             const response = await loginApi(formData);
             if (response?.jwt) {
                 toast.success("Ingresaste con exito");
+                login(response.jwt);
                 onCloseModal();
-   
 
             } else {
                 toast.error("Email o contraseña son incorrectos");
@@ -26,24 +32,40 @@ export default function LoginForm(props) {
         },
 
     });
+    const handleShowError = () => {
+        setShowError(true);
+    }
+    const resetPassword = () => {
+        formik.setErrors({});
+        const validateEmail = Yup.string().email().required();
+        if (!validateEmail.isValidSync(formik.values.identifier)) {
+            formik.setErrors({ identifier: true });
+        } else {
+            resetPasswordApi(formik.values.identifier);
+        }
+
+    }
     return (
         <Form className='login-form' onSubmit={formik.handleSubmit}>
             <Form.Field>
                 <label>Username</label>
-
-                <Form.Input error={formik.errors.identifier} onChange={formik.handleChange} placeholder='Correo Electronico' name='identifier' type='text' />
+                {showError ? <Form.Input error={formik.errors.identifier} onChange={formik.handleChange} placeholder='Correo Electronico' name='identifier' type='text' />
+                    : <Form.Input onChange={formik.handleChange} placeholder='Correo Electronico' name='identifier' type='text' />
+                }
 
             </Form.Field>
             <Form.Field>
                 <label>Contraseña</label>
-                <Form.Input error={formik.errors.password} onChange={formik.handleChange} placeholder='Contraseña' name='password' type='password' />
+                {showError ? <Form.Input error={formik.errors.password} onChange={formik.handleChange} placeholder='Contraseña' name='password' type='password' />
+                    : <Form.Input onChange={formik.handleChange} placeholder='Contraseña' name='password' type='password' />
+                }
 
             </Form.Field>
             <div className='actions'>
                 <Button type='button' basic onClick={handleRegisterForm}>Registrarse</Button>
                 <div>
-                    <Button className='submit' type='submit' loading={loading}>Ingresar</Button>
-                    <Button type='button'>¿Has olvidado la contraseña?</Button>
+                    <Button className='submit' type='submit' loading={loading} onClick={handleShowError}>Ingresar</Button>
+                    <Button type='button' onClick={resetPassword}>¿Has olvidado la contraseña?</Button>
                 </div>
             </div>
         </Form>

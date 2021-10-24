@@ -64,6 +64,9 @@
     },
     "lastname": {
       "type": "string"
+    },
+    "tipo_usuario": {
+      "model": "tipo-usuario"
     }
   }
 }
