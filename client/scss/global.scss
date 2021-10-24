@@ -1,8 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700&display=swap');@import "./index.scss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700&display=swap');
+@import "./index.scss";
+
 * {
- 
-    font-family: 'Poppins', sans-serif!important;
+
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.ui.grid {
+  margin: 0 !important;
+}
+.ui.form{
+  .ui.input{
+    input{
+      border:1px solid $border-gray-light;
+      font-size: 16px!important;
+    }
   }
-  .ui.grid {
-    margin: 0 !important;
+  .actions{
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .ui.button.submit{
+    background-color: $primary;
+    color:$font-light;
+    margin:0;
+  }
 }

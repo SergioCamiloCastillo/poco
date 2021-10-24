@@ -16,7 +16,7 @@ export default function HeaderBlack() {
                 </Grid.Column>
 
                 <Grid.Column mobile={8} tablet={8} computer={8}>
-                    <div class='social-links'>
+                    <div className='social-links'>
                         <a href="#"><FontAwesomeIcon icon={faFacebook} size="lg" /></a>
                         <a href="#"><FontAwesomeIcon icon={faTwitter} size="lg" /></a>
                         <a href="#"><FontAwesomeIcon icon={faInstagram} size="lg" /></a>

@@ -17,5 +17,5 @@ export default function Auth(props) {
         setShowLogin(false);
     }
 
-    return showLogin ? <LoginForm handleRegisterForm={handleRegisterForm} /> : <RegisterForm handleLoginForm={handleLoginForm} />
+    return showLogin ? <LoginForm onCloseModal={onCloseModal} handleRegisterForm={handleRegisterForm} /> : <RegisterForm handleLoginForm={handleLoginForm} />
 }

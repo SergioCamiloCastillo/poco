@@ -79,12 +79,12 @@ export default function Header() {
                     </nav>
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={16} computer={7}>
-                    <div class='other-services'>
+                    <div className='other-services'>
                         <div className='other-services__call-order'>
                             <div className='logo'><FontAwesomeIcon size="3x" icon={faMotorcycle} /></div>
                             <div>
-                                <p class='title-call-order'>Llámanos y ordena</p>
-                                <p class='number'>+601 5410113</p>
+                                <p className='title-call-order'>Llámanos y ordena</p>
+                                <p className='number'>+601 5410113</p>
                             </div>
 
                         </div>
