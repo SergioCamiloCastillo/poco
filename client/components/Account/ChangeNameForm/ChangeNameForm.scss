@@ -1,0 +1,18 @@
+.change-name-form {
+    >h4 {
+        color: $primary;
+    }
+
+    >form {
+        text-align: center;
+
+        .submit {
+            padding: 12px 60px;
+        }
+
+        label {
+            font-size: 16px !important;
+            text-align: left;
+        }
+    }
+}

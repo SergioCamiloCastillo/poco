@@ -1,0 +1,20 @@
+.account {
+    padding: 30px;
+    background: #f6f6f6;
+    margin-bottom: 30px;
+
+    &__configuration {
+        position: relative;
+        padding: 10px;
+
+        .title {
+            width: max-content;
+            font-size: 52px;
+            margin:auto;
+            text-transform: capitalize;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+    }
+}

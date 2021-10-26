@@ -7,7 +7,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/router";
-
+import BasicLayout from "layouts/BasicLayout/";
 function MyApp({ Component, pageProps }) {
 
   const [auth, setAuth] = useState(undefined);
@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const token = getToken();
     if (token) {
+      console.log(token);
       setAuth({
         token: token,
         idUser: jwtDecode(token).id
@@ -53,7 +54,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <AuthContext.Provider value={authData}>
-        <Component {...pageProps} />
+        <BasicLayout>
+          <Component {...pageProps} />
+        </BasicLayout>
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
