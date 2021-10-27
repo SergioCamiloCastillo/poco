@@ -66,3 +66,39 @@ export async function getMeApi(logout) {
         return null;
     }
 }
+export async function updateNameApi(idUser, data, logout) {
+   
+    try {
+        const url = `${BASE_PATH}/users/${idUser}`;
+        const params = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }
+        const result = authFetch(url, params, logout);
+        return result ? result : null;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+export async function updatePasswordApi(idUser, password, logout) {
+   
+    try {
+        const url = `${BASE_PATH}/users/${idUser}`;
+        const params = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({password})
+        }
+        const result = authFetch(url, params, logout);
+        return result ? result : null;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

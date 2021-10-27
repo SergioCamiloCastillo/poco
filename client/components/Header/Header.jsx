@@ -1,7 +1,7 @@
 
 import { Grid } from 'semantic-ui-react'
 import { Image as ImageSemantic } from 'semantic-ui-react';
-import { faHamburger, faPizzaSlice, faHotdog,faPowerOff,faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHamburger, faPizzaSlice, faHotdog, faPowerOff, faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Form, Modal, Input } from 'semantic-ui-react'
 import { useState, useEffect } from 'react';
@@ -144,6 +144,7 @@ export default function Header() {
 
                                 </Modal>
                             </Form>
+
 
                             {user && <Link href='account'><a><FontAwesomeIcon size="lg" icon={faUser} /></a></Link>}
 

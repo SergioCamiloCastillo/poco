@@ -1,7 +1,6 @@
 import { TOKEN } from "utils/constants";
 import jwtDecode from "jwt-decode";
-import CryptoAES from 'crypto-js/aes';
-import CryptoENC from 'crypto-js/enc-utf8';
+
 
 export function setToken(token) {
     localStorage.setItem(TOKEN, token);
