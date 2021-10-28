@@ -3,7 +3,9 @@
     background: #f6f6f6;
     margin-bottom: 30px;
 
-    &__configuration {
+    &__configuration,
+    &__addresses
+    {
         position: relative;
         padding: 10px;
 
@@ -17,4 +19,5 @@
         }
 
     }
+
 }

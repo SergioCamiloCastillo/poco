@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/direcciones",
+      "handler": "direcciones.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/direcciones/count",
+      "handler": "direcciones.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/direcciones/:id",
+      "handler": "direcciones.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/direcciones",
+      "handler": "direcciones.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/direcciones/:id",
+      "handler": "direcciones.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/direcciones/:id",
+      "handler": "direcciones.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

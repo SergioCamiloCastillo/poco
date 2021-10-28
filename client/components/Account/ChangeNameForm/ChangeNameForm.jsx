@@ -15,12 +15,12 @@ export default function ChangeNameForm(props) {
         onSubmit: async (formData) => {
             setLoading(true);
             const response = await updateNameApi(user.id, formData, logout);
-            
+
             if (!response) {
                 toast.error("Error al actualizar datos");
                 setLoading(false);
-            } 
-            else if(response?.statusCode === 400){
+            }
+            else if (response?.statusCode === 400) {
                 toast.error("Correo electronico asignado a otro usuario");
                 setLoading(false);
             }
@@ -53,10 +53,10 @@ export default function ChangeNameForm(props) {
 
 
                 </Form.Group>
-                <div className='text-email-currently'>
+                {/*   <div className='text-email-currently'>
                     <label>Correo electronico registrado actualmente: <h3>{user.email}</h3></label>
                 </div>
-
+ */}
                 <Form.Group widths="equal">
                     <Form.Field>
                         <label>Nuevo Correo Electrónico</label>
@@ -69,7 +69,7 @@ export default function ChangeNameForm(props) {
 
                     </Form.Field>
                 </Form.Group>
-              
+
 
 
                 <Button className='submit' loading={loading}>Actualizar</Button>
@@ -77,14 +77,14 @@ export default function ChangeNameForm(props) {
         </div>
     )
 }
-const initialValues = (name, lastname,email) => {
+const initialValues = (name, lastname, email) => {
 
     return {
         name: name || "",
         lastname: lastname || "",
         email: email || "",
         repeatEmail: email || "",
-       
+
     }
 }
 const validationSchema = () => {
@@ -93,7 +93,7 @@ const validationSchema = () => {
         lastname: Yup.string().required("Campo Requerido"),
         email: Yup.string().email("Correo electronico invalido").required("Campo requerido").oneOf([Yup.ref("repeatEmail")], "Campos Email no son iguales"),
         repeatEmail: Yup.string().email("Correo electronico invalido").required("Campo requerido").oneOf([Yup.ref("email")], "Campos Email no son iguales"),
-     
+
 
 
     }

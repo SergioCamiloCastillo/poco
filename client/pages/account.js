@@ -4,6 +4,12 @@ import useAuth from 'hooks/useAuth';
 import { getMeApi } from 'api/user';
 import ChangeNameForm from '@/components/Account/ChangeNameForm';
 import ChangePassword from '@/components/Account/ChangePassword';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Button } from 'semantic-ui-react';
+import BasicModal from '@/components/Modal/BasicModal/';
+import AddressForm from '@/components/Account/AddressForm/AddressForm';
+
 
 export default function account() {
     const [user, setUser] = useState(undefined);
@@ -15,7 +21,7 @@ export default function account() {
             setUser(response || null); //si existe devuelve response, si no devuelve nada le asigno null
         })();
     }, [auth]);//cambiara el useffect cuando cambie de auth es decir otro usuario
-    if(!user) return null;//si no ha llegado los datos del backend, entonces asignele user un null, hasta que llegue la respuesta
+    if (!user) return null;//si no ha llegado los datos del backend, entonces asignele user un null, hasta que llegue la respuesta
     if (!auth && !user) { //si no esta logueado
         router.replace("/");
         return null;
@@ -23,13 +29,15 @@ export default function account() {
 
     return (
         <div className='account'>
-            <Configuration user={user} logout={ logout} setReloadUser={setReloadUser} />
+            <Configuration user={user} logout={logout} setReloadUser={setReloadUser} />
+            <br/><br/>
+            <Addresses />
         </div>
     )
 }
 
 const Configuration = (props) => {
-    const {user,logout,setReloadUser} = props;
+    const { user, logout, setReloadUser } = props;
     return (
         <div className='account__configuration'>
             <div className='title'>Tu Cuenta</div>
@@ -40,5 +48,26 @@ const Configuration = (props) => {
 
         </div>
 
+    )
+}
+
+const Addresses = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState("");
+    const [formModal, setFormModal] = useState(null);
+    const openModal = (title) => {
+        setTitleModal(title);
+        setShowModal(true);
+        setFormModal(<AddressForm setShowModal={setShowModal} />);
+    }
+    return (
+        <div className='account__addresses'>
+            <div className='title'>Direcciones</div>
+            <Button color='green' onClick={()=>openModal("Nueva Dirección")}>Crear Dirección <FontAwesomeIcon icon={faPlus} /></Button>
+            <div className='data'>
+                <p>Lista de direcciones</p>
+            </div>
+            <BasicModal show={showModal} setShow={setShowModal} title={titleModal}>{formModal}</BasicModal>
+        </div>
     )
 }
