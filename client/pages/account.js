@@ -9,11 +9,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from 'semantic-ui-react';
 import BasicModal from '@/components/Modal/BasicModal/';
 import AddressForm from '@/components/Account/AddressForm/AddressForm';
+import ListAddress from '@/components/Account/ListAddress/ListAddress';
 
 
 export default function account() {
     const [user, setUser] = useState(undefined);
     const { auth, logout, setReloadUser } = useAuth();
+
     const router = useRouter();
     useEffect(() => {
         (async () => {
@@ -30,7 +32,7 @@ export default function account() {
     return (
         <div className='account'>
             <Configuration user={user} logout={logout} setReloadUser={setReloadUser} />
-            <br/><br/>
+            <br /><br />
             <Addresses />
         </div>
     )
@@ -52,20 +54,21 @@ const Configuration = (props) => {
 }
 
 const Addresses = () => {
+    const [reloadAddresses, setReloadAddresses] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [formModal, setFormModal] = useState(null);
     const openModal = (title) => {
         setTitleModal(title);
         setShowModal(true);
-        setFormModal(<AddressForm setShowModal={setShowModal} />);
+        setFormModal(<AddressForm setReloadAddresses={setReloadAddresses} setShowModal={setShowModal} />);
     }
     return (
         <div className='account__addresses'>
             <div className='title'>Direcciones</div>
-            <Button color='green' onClick={()=>openModal("Nueva Dirección")}>Crear Dirección <FontAwesomeIcon icon={faPlus} /></Button>
+            <Button color='green' onClick={() => openModal("Nueva Dirección")}>Crear Dirección <FontAwesomeIcon icon={faPlus} /></Button>
             <div className='data'>
-                <p>Lista de direcciones</p>
+                <ListAddress setReloadAddresses={setReloadAddresses} reloadAddresses={reloadAddresses} />
             </div>
             <BasicModal show={showModal} setShow={setShowModal} title={titleModal}>{formModal}</BasicModal>
         </div>

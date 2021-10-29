@@ -1,5 +1,5 @@
 import { createAddressAPi } from 'api/address';
-import {  useFormik } from 'formik'
+import { useFormik } from 'formik'
 import useAuth from 'hooks/useAuth';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
@@ -7,7 +7,7 @@ import { Form, Button } from 'semantic-ui-react'
 import * as Yup from "yup";
 
 export default function AddressForm(props) {
-    const { setShowModal } = props;
+    const { setShowModal, setReloadAddresses } = props;
     const [loading, setLoading] = useState(false);
     const { auth, logout } = useAuth();
     const formik = useFormik({
@@ -30,6 +30,7 @@ export default function AddressForm(props) {
         } else {
             formik.resetForm();
             setLoading(false);
+            setReloadAddresses(true);
             setShowModal(false);
             toast.warning("Dirección guardada");
 
