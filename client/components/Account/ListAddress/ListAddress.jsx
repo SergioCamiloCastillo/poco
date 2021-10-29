@@ -1,4 +1,4 @@
-import { getAddressesApi } from 'api/address';
+import { getAddressesApi, removeAddressApi } from 'api/address';
 import React, { useState, useEffect } from 'react'
 import useAuth from 'hooks/useAuth';
 import { map, size } from "lodash";
@@ -21,17 +21,26 @@ export default function ListAddress(props) {
     if (!addresses) {
         return (<Loader />);
     }
+
     return (
         <div className='list-address'>
 
             {size(addresses) == 0 ? <h3>No hay ninguna dirección creada</h3> : <Grid>{map(addresses, (address) => (
-                <Grid.Column key={address.id} mobile={16} tablet={8} computer={4}><Address address={address} /></Grid.Column>
+                <Grid.Column key={address.id} mobile={16} tablet={8} computer={4}><Address setReloadAddresses={setReloadAddresses} logout={logout} address={address} /></Grid.Column>
             ))}</Grid>}
         </div>
     )
 }
 const Address = (props) => {
-    const { address } = props;
+    const { address, logout, setReloadAddresses } = props;
+    const [loadingDelete, setLoadingDelete] = useState(false);
+
+    const removeAddress = async (idAddress) => {
+        setLoadingDelete(true);
+        const response = await removeAddressApi(idAddress, logout);
+        if (response) setReloadAddresses(true);
+        setLoadingDelete(false);
+    }
     return (
         <div className='address'>
             <p>{address.title}</p>
@@ -41,7 +50,7 @@ const Address = (props) => {
             <p>{address.phone}</p>
             <div className='actions'>
                 <Button primary >Editar</Button>
-                <Button>Eliminar</Button>
+                <Button onClick={() => removeAddress(address.id)} loading={loadingDelete}>Eliminar</Button>
             </div>
         </div>
     )
