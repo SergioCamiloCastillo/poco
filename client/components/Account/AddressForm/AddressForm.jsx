@@ -1,4 +1,4 @@
-import { createAddressAPi } from 'api/address';
+import { createAddressAPi, updateAddressApi } from 'api/address';
 import { useFormik } from 'formik'
 import useAuth from 'hooks/useAuth';
 import React, { useState } from 'react'
@@ -7,16 +7,38 @@ import { Form, Button } from 'semantic-ui-react'
 import * as Yup from "yup";
 
 export default function AddressForm(props) {
-    const { setShowModal, setReloadAddresses } = props;
+    const { setShowModal, setReloadAddresses, newAddress, address } = props;
+
     const [loading, setLoading] = useState(false);
     const { auth, logout } = useAuth();
+
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(address),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: (formData) => {
-            createAddress(formData);
+            newAddress ? createAddress(formData) : updateAddress(formData);
         }
     });
+    const updateAddress = async (formData) => {
+        setLoading(true);
+
+        const formDataTemp = {
+            ...formData,
+            usuario: auth.idUser
+        }
+
+        const response = updateAddressApi(address.id, formDataTemp, logout);
+        if (!response) {
+            toast.warning("Error al actualizar la dirección");
+            setLoading(false);
+        } else {
+            formik.resetForm();
+            setLoading(false);
+            setReloadAddresses(true);
+            setShowModal(false);
+            toast.warning("Dirección Actualizada");
+        }
+    }
     const createAddress = async (formData) => {
         setLoading(true);
         const formDataTemp = {
@@ -53,7 +75,7 @@ export default function AddressForm(props) {
                 <Form.Input name='postal' type='text' label='Postal' placeholder='Postal' onChange={formik.handleChange} value={formik.values.postal} error={formik.errors.postal}></Form.Input>
             </Form.Group>
             <div className='actions'>
-                <Button className='submit' type='submit' loading={loading}>Crear Dirección</Button>
+                <Button className='submit' type='submit' loading={loading}>{newAddress ? 'Crear Dirección' : "Actualizar Dirección"}</Button>
             </div>
         </Form>
     )
@@ -71,13 +93,14 @@ const validationSchema = () => {
 
     }
 }
-const initialValues = () => {
+const initialValues = (address) => {
     return {
-        title: "",
-        name: "",
-        address: "",
-        city: "",
-        state: "",
-        postal: ""
+        title: address?.title || "",
+        name: address?.name || "",
+        address: address?.address || "",
+        city: address?.city || "",
+        state: address?.state || "",
+        postal: address?.postal || "",
+        phone: address?.phone || ""
     }
 }

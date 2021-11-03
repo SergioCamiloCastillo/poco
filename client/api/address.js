@@ -51,3 +51,21 @@ export async function removeAddressApi(idAddress, logout) {
         return null;
     }
 }
+export async function updateAddressApi(idAddress, dataAddress, logout) {
+    try {
+        const url = `${BASE_PATH}/direcciones/${idAddress}`;
+        const params = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataAddress)
+        }
+        const response = await authFetch(url, params, logout);
+        return response;
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

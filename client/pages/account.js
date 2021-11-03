@@ -58,17 +58,20 @@ const Addresses = () => {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [formModal, setFormModal] = useState(null);
-    const openModal = (title) => {
+
+    const openModal = (title, address) => {
         setTitleModal(title);
         setShowModal(true);
-        setFormModal(<AddressForm setReloadAddresses={setReloadAddresses} setShowModal={setShowModal} />);
+        setFormModal(<AddressForm address={address || null} newAddress={address ? false : true} setReloadAddresses={setReloadAddresses} setShowModal={setShowModal} />);
+        //en newadreess trae el objeto y verifica, si es true se insertara un nuevo valor, si es false ya trae datos por lo tanto la funcion es actualizar
     }
+
     return (
         <div className='account__addresses'>
             <div className='title'>Direcciones</div>
             <Button color='green' onClick={() => openModal("Nueva Dirección")}>Crear Dirección <FontAwesomeIcon icon={faPlus} /></Button>
             <div className='data'>
-                <ListAddress setReloadAddresses={setReloadAddresses} reloadAddresses={reloadAddresses} />
+                <ListAddress openModal={openModal} setReloadAddresses={setReloadAddresses} reloadAddresses={reloadAddresses} />
             </div>
             <BasicModal show={showModal} setShow={setShowModal} title={titleModal}>{formModal}</BasicModal>
         </div>

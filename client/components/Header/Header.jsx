@@ -10,6 +10,8 @@ import Auth from '../Auth/';
 import useAuth from 'hooks/useAuth';
 import { getMeApi } from 'api/user';
 import Link from 'next/link'
+import { getCategoryApi } from 'api/category';
+import { map } from 'lodash';
 
 export default function Header() {
     const [open, setOpen] = useState(false);
@@ -18,6 +20,8 @@ export default function Header() {
     const [showModal, setShowModal] = useState(false);
     const changeShowModal = () => setShowModal(!showModal);
     const onCloseModal = () => setShowModal(false);
+    const [categories, setCategories] = useState([]);
+
     const { logout, auth } = useAuth();
     useEffect(() => {
         (async () => {
@@ -25,7 +29,13 @@ export default function Header() {
             setUser(response);
         })()
         //esta funcion anomima para que se llame asimisma
-    }, [auth])
+    }, [auth]);
+    useEffect(() => {
+        (async () => {
+            const response = await getCategoryApi();
+            setCategories(response || []);
+        })()
+    }, [])
     return (
         <div className='header'>
             <Grid>
@@ -47,18 +57,24 @@ export default function Header() {
                                 <Link href="/products"><a href="#">Menú <FontAwesomeIcon icon={faChevronDown} /></a></Link>
                             </div>
                             <div className="sub-menu">
-                                <div className="icon-box">
+                                {map(categories, (category) => (
+                                    <Link href={`/category/${category.url}`}>
+
+                                        <div className="icon-box">
+                                            <div className="icon"></div>
+                                            <div className="text">
+                                                <div className="title">{category.titulo} <i className="far fa-arrow-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                                {/* <div className="icon-box">
                                     <div className="icon"><FontAwesomeIcon icon={faHamburger} /></div>
 
                                     <span className="title">Hamburguesa <i className="far fa-arrow-right"></i></span>
 
                                 </div>
-                                <div className="icon-box">
-                                    <div className="icon"><FontAwesomeIcon icon={faPizzaSlice} /></div>
-                                    <div className="text">
-                                        <div className="title">Pizza <i className="far fa-arrow-right"></i></div>
-                                    </div>
-                                </div>
+
                                 <div className="icon-box">
                                     <div className="icon"><FontAwesomeIcon icon={faHotdog} /></div>
                                     <div className="text">
@@ -70,7 +86,7 @@ export default function Header() {
                                     <div className="text">
                                         <div className="title">Pollo <i className="far fa-arrow-right"></i></div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="sub-menu-holder"></div>
                             </div>
                         </div>
