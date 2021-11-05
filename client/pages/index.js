@@ -1,6 +1,24 @@
+import ListGames from "@/components/ListGames/ListGames";
+import { getLastProductsApi } from "api/product";
+import React from "react"
+import { Loader } from "semantic-ui-react";
 
-export default function Home() {
+
+export default function Home({ productsData }) {
+
+
   return (
-      <h1>Estamos en la home</h1>
+    <div className='home'>
+      {!productsData && <Loader active>Cargando Juegos</Loader>}
+      {productsData && productsData.length === 0 && <h1>Sin juegos</h1>}
+      {productsData.length > 0 && <ListGames productsData={productsData} />}
+    </div>
   )
+}
+
+export async function getServerSideProps({ query }) {
+
+  const productsData = await getLastProductsApi(4);
+
+  return { props: { productsData } };
 }
