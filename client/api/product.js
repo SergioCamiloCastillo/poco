@@ -36,3 +36,14 @@ export async function getTotalProductsCategoryApi(category) {
         return null;
     }
 }
+export async function getDataProduct(path) {
+    try {
+        const url = `${BASE_PATH}/productos?url=${path}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result[0];
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

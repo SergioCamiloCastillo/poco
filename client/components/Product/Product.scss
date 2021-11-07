@@ -1,0 +1,184 @@
+.product {
+    .image-principal {
+        overflow: hidden;
+        position: relative;
+        height: 650px;
+        margin-bottom: 20px;
+        border: 10px solid transparent;
+        border-radius: 24px;
+        color: $border-gray-light;
+        box-shadow: 0 0 0 1px;
+
+        div:first-of-type {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 14px;
+        }
+
+        .background-image {
+            background-color: #f7f4ef;
+            height: 100%;
+
+
+        }
+    }
+
+    .gallery {
+        img {
+            border: 4px solid #fff !important;
+            box-shadow: 0 0 0 1px;
+            color: #fff;
+            opacity: .5;
+            transition: all, ease, .2s;
+            margin-right: 20px;
+
+            margin: 0;
+            margin-right: 0px;
+            border-radius: 20px;
+
+            cursor: pointer;
+            background-color: #f7f4ef;
+            border: 8px solid #fff !important;
+
+            &:hover {
+                opacity: 1;
+                transition: all, ease, .2s;
+            }
+        }
+
+        /*  div {
+            border: 1px solid #edebeb;
+            border-radius: 25px;
+
+        }
+       */
+
+    }
+
+    .active {
+        opacity: 1 !important;
+    }
+
+    .product-description {
+        h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            color: $border-gray-dark;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            color: $primary;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cart {
+            margin-bottom: 0;
+            padding: 5px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            border-top: 1px solid;
+            border-top-color: currentcolor;
+            border-top-color: $border-gray-light;
+
+            .actions {
+                display: flex;
+                align-items: center;
+                margin-top: 10px;
+                margin-right: 50px;
+
+                button {
+                    color: #000;
+                    background-color: #f7f4ef;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 50%;
+                    padding: 0;
+                    text-align: center;
+                    z-index: 9;
+                    display: inline-block;
+                    font-weight: 700;
+                    cursor: pointer;
+                    border: none;
+                    transition: 0.4s;
+
+                    &:hover {
+                        background-color: $primary;
+                        transition: 0.4s;
+                        color: #fff;
+                    }
+                }
+
+                input {
+                    padding: .5em;
+                    border-radius: 0;
+                    text-align: center;
+                    font-size: 16px;
+                    width: 35px;
+                    color: var(--heading);
+                    border: none;
+                    -moz-appearance: textfield;
+                    font-weight: 700;
+                }
+
+
+            }
+
+            .btn-add-cart {
+                background-color: $primary;
+                text-transform: uppercase;
+                line-height: 2.5;
+                flex: 1;
+                font-size: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                margin-top: 10px;
+                white-space: nowrap;
+                border-radius: 8px 8px 8px 8px;
+                cursor: pointer;
+                border: 0;
+                color: #000;
+                font-weight: 700;
+                transition: 0.3s;
+
+                &:hover {
+                    color: #fff;
+                    transition: 0.3s;
+                }
+            }
+
+            .btn-add-favorites {
+
+
+                margin-top: 10px;
+                margin-left: 10px;
+                display: inline-block;
+                white-space: nowrap;
+                width: 48px;
+                height: 48px;
+                line-height: 48px;
+                text-align: center;
+                position: relative;
+                font-size: 0;
+                background-color: #f7f4ef;
+                border-radius: 8px;
+                cursor: pointer;
+                padding: 0;
+                border: 0;
+                padding: 14px;
+            }
+        }
+    }
+}
