@@ -1,7 +1,7 @@
 
 import { Grid } from 'semantic-ui-react'
 import { Image as ImageSemantic } from 'semantic-ui-react';
-import { faHamburger, faPizzaSlice, faHotdog, faPowerOff, faDrumstickBite, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPowerOff, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Form, Modal, Input } from 'semantic-ui-react'
 import { useState, useEffect } from 'react';
@@ -68,25 +68,7 @@ export default function Header() {
                                         </div>
                                     </Link>
                                 ))}
-                                {/* <div className="icon-box">
-                                    <div className="icon"><FontAwesomeIcon icon={faHamburger} /></div>
-
-                                    <span className="title">Hamburguesa <i className="far fa-arrow-right"></i></span>
-
-                                </div>
-
-                                <div className="icon-box">
-                                    <div className="icon"><FontAwesomeIcon icon={faHotdog} /></div>
-                                    <div className="text">
-                                        <div className="title">Perro Caliente <i className="far fa-arrow-right"></i></div>
-                                    </div>
-                                </div>
-                                <div className="icon-box">
-                                    <div className="icon"><FontAwesomeIcon icon={faDrumstickBite} /></div>
-                                    <div className="text">
-                                        <div className="title">Pollo <i className="far fa-arrow-right"></i></div>
-                                    </div>
-                                </div> */}
+                               
                                 <div className="sub-menu-holder"></div>
                             </div>
                         </div>
