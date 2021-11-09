@@ -1,17 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react';
 import Image from 'next/image';
 import { BASE_PATH } from 'utils/constants';
 import { faShoppingBasket, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { addFavoriteApi, isFavoriteApi, deleteFavoriteApi } from 'api/favorite';
+import useAuth from 'hooks/useAuth';
+import { size } from "lodash-es";
 
 export default function Product(props) {
+
     const { productData } = props;
-    console.log(productData)
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [reloadFavorite, setReloadFavorite] = useState(false);
     const [showImage, setShowImage] = useState(productData.imagen_principal.url);
-    const changeImage = (urlImage) => {
-        setShowImage(urlImage);
+    const changeImage = (urlImage) => { setShowImage(urlImage); }
+    const { auth, logout } = useAuth();
+
+    const addFavorite = async (idProduct) => {
+        if (auth) {
+            setIsFavorite(!isFavorite);
+            await addFavoriteApi(auth.idUser, productData.id, logout);
+            setReloadFavorite(true);
+
+
+        }
+
+
     }
+    const deleteFavorite = async (idProduct) => {
+        if (auth) {
+            setIsFavorite(!isFavorite);
+            await deleteFavoriteApi(auth.idUser, productData.id, logout);
+            setReloadFavorite(true);
+        }
+
+
+    }
+
+    useEffect(() => {
+        if (auth) {
+            if (productData) {
+                (async () => {
+
+                    const response = await isFavoriteApi(auth.idUser, productData.id, logout);
+                    setIsFavorite(size(response) > 0);
+                })();
+            }
+            setReloadFavorite(false);
+        }
+    }, [productData, reloadFavorite]);
+
+
     return (
         <div className='product'>
             <Grid>
@@ -55,7 +95,7 @@ export default function Product(props) {
                                 <button className='plus'>+</button>
                             </div>
                             <button className='btn-add-cart'><FontAwesomeIcon size="lg" icon={faShoppingBasket} />&nbsp;&nbsp;Add to Cart</button>
-                            <FontAwesomeIcon  className='btn-add-favorites' icon={faHeart} />
+                            <FontAwesomeIcon onClick={isFavorite ? () => deleteFavorite(productData.id) : () => addFavorite(productData.id)} style={{ color: isFavorite ? "red" : "black" }} className='btn-add-favorites' icon={faHeart} />
                         </div>
                     </div>
 

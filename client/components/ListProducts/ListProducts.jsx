@@ -39,7 +39,7 @@ export default function ListProducts(props) {
 
                                             <Grid.Column mobile={16} tablet={12} computer={8}>
                                                 <div className='price'>
-                                                    $50.000
+                                                ${item.precio}
                                                 </div>
 
                                             </Grid.Column>
