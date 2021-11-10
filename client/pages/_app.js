@@ -3,11 +3,14 @@ import 'semantic-ui-css/semantic.min.css'
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from "../context/AuthContext";
+import CartContext from "../context/CartContext";
 import React, { useMemo, useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/router";
 import BasicLayout from "layouts/BasicLayout/";
+
+
 function MyApp({ Component, pageProps }) {
 
   const [auth, setAuth] = useState(undefined);
@@ -48,27 +51,39 @@ function MyApp({ Component, pageProps }) {
     setReloadUser: setReloadUser
   }), [auth]);
 
+  const cartData = useMemo(
+    () => ({
+      productsCart: 0,
+      addProductCart: () => null,
+      getProductsCart: () => null,
+      removeProductCart: () => null,
+      removeAllProductsCart: () => null
+    }), []
+  );
+
   if (auth === undefined) {
     return null;
   }
   return (
     <>
       <AuthContext.Provider value={authData}>
-        <BasicLayout>
-          <Component {...pageProps} />
-        </BasicLayout>
+        <CartContext.Provider value={cartData}>
+          <BasicLayout>
+            <Component {...pageProps} />
+          </BasicLayout>
 
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover
-        />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+          />
+        </CartContext.Provider>
       </AuthContext.Provider>
     </>
   )

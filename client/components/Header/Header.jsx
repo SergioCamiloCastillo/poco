@@ -4,7 +4,7 @@ import { Image as ImageSemantic } from 'semantic-ui-react';
 import { faPowerOff, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Form, Modal, Input } from 'semantic-ui-react'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import BasicModal from '../Modal/BasicModal/';
 import Auth from '../Auth/';
 import useAuth from 'hooks/useAuth';
@@ -12,8 +12,12 @@ import { getMeApi } from 'api/user';
 import Link from 'next/link'
 import { getCategoryApi } from 'api/category';
 import { map } from 'lodash';
+import { useRouter } from 'next/router';
+
 
 export default function Header() {
+    const router = useRouter();
+    const [load, setLoad] = useState(false);
     const [open, setOpen] = useState(false);
     const [titleModal, setTitleModal] = useState("Iniciar Sesión");
     const [user, setUser] = useState(undefined);
@@ -21,8 +25,16 @@ export default function Header() {
     const changeShowModal = () => setShowModal(!showModal);
     const onCloseModal = () => setShowModal(false);
     const [categories, setCategories] = useState([]);
-
+    const [search, setSearch] = useState("");
     const { logout, auth } = useAuth();
+    console.log(search);
+    useEffect(() => {
+        if (load) {
+            router.push(`/search?query=${search}`);
+        }
+        setLoad(true);
+    }, [search]);
+
     useEffect(() => {
         (async () => {
             const response = await getMeApi(logout);
@@ -68,7 +80,7 @@ export default function Header() {
                                         </div>
                                     </Link>
                                 ))}
-                               
+
                                 <div className="sub-menu-holder"></div>
                             </div>
                         </div>
@@ -126,10 +138,12 @@ export default function Header() {
                                         <Modal.Description>
                                             <Form.Field
                                                 width={12}
-                                                id='form-input-control-first-name'
+                                                id='search-product'
                                                 control={Input}
                                                 label='Buscar producto: '
                                                 placeholder='Buscar...'
+                                                value={router.query.query}
+                                                onChange={(_, data) => setSearch(data.value)}
                                             />
                                         </Modal.Description>
                                         <Modal.Actions>

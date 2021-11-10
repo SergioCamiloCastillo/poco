@@ -1,6 +1,7 @@
 import ListProducts from '@/components/ListProducts/ListProducts';
 import { getFavoriteApi } from 'api/favorite'
 import useAuth from 'hooks/useAuth'
+import useCart from 'hooks/useCart';
 import { size } from 'lodash-es';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react'
@@ -9,6 +10,7 @@ import { Loader } from 'semantic-ui-react';
 export default function wishlist() {
     const [products, setProducts] = useState(null);
     const { auth, logout } = useAuth();
+    console.log(useCart());
     if (!auth) { //si no esta logueado
         router.replace("/");
         return null;
