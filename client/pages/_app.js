@@ -1,6 +1,6 @@
 import "../scss/global.scss";
 import 'semantic-ui-css/semantic.min.css'
-import { ToastContainer } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from "../context/AuthContext";
 import CartContext from "../context/CartContext";
@@ -9,6 +9,7 @@ import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/router";
 import BasicLayout from "layouts/BasicLayout/";
+import { getProductsCart, addProductCart } from "api/cart";
 
 
 function MyApp({ Component, pageProps }) {
@@ -54,13 +55,19 @@ function MyApp({ Component, pageProps }) {
   const cartData = useMemo(
     () => ({
       productsCart: 0,
-      addProductCart: () => null,
-      getProductsCart: () => null,
+      addProductCart: (product) => addProduct(product),
+      getProductsCart: getProductsCart,
       removeProductCart: () => null,
       removeAllProductsCart: () => null
     }), []
   );
-
+  const addProduct = (product) => {
+    if (auth) {
+      addProductCart(product);
+    } else {
+      toast.warning("Para comprar un producto debe iniciar sesión");
+    }
+  }
   if (auth === undefined) {
     return null;
   }

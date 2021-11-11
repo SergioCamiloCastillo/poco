@@ -5,10 +5,11 @@ import { BASE_PATH } from 'utils/constants';
 import { faHeart, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import useCart from 'hooks/useCart';
 
 export default function ListProducts(props) {
     const { productsData } = props;
-
+    const { addProductCart } = useCart();
     return (
         <div className='list-games'>
             <Grid>
@@ -39,7 +40,7 @@ export default function ListProducts(props) {
 
                                             <Grid.Column mobile={16} tablet={12} computer={8}>
                                                 <div className='price'>
-                                                ${item.precio}
+                                                    ${item.precio}
                                                 </div>
 
                                             </Grid.Column>
