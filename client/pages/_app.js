@@ -9,13 +9,15 @@ import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/router";
 import BasicLayout from "layouts/BasicLayout/";
-import { getProductsCart, addProductCart } from "api/cart";
+import { getProductsCart, addProductCart, countProductsCart } from "api/cart";
 
 
 function MyApp({ Component, pageProps }) {
 
   const [auth, setAuth] = useState(undefined);
   const [reloadUser, setReloadUser] = useState(false);
+  const [totalProductsCart, setTotalProductsCart] = useState(0);
+  const [realoadCart, setRealoadCart] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const token = getToken();
@@ -29,7 +31,12 @@ function MyApp({ Component, pageProps }) {
       setAuth(null);
     }
     setReloadUser(false);
-  }, [reloadUser])
+  }, [reloadUser]);
+
+  useEffect(() => {
+    setTotalProductsCart(countProductsCart);
+    setRealoadCart(false);
+  }, [realoadCart, auth]);
 
   const login = (token) => {
     setToken(token);
@@ -52,22 +59,25 @@ function MyApp({ Component, pageProps }) {
     setReloadUser: setReloadUser
   }), [auth]);
 
-  const cartData = useMemo(
-    () => ({
-      productsCart: 0,
-      addProductCart: (product) => addProduct(product),
-      getProductsCart: getProductsCart,
-      removeProductCart: () => null,
-      removeAllProductsCart: () => null
-    }), []
-  );
+
   const addProduct = (product) => {
-    if (auth) {
+    const token = getToken();
+    if (token) {
       addProductCart(product);
+      setRealoadCart(true);
     } else {
       toast.warning("Para comprar un producto debe iniciar sesión");
     }
   }
+  const cartData = useMemo(
+    () => ({
+      productsCart: totalProductsCart,
+      addProductCart: (product) => addProduct(product),
+      getProductsCart: getProductsCart,
+      removeProductCart: () => null,
+      removeAllProductsCart: () => null
+    }), [totalProductsCart]
+  );
   if (auth === undefined) {
     return null;
   }

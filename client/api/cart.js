@@ -1,10 +1,9 @@
-import { size } from "lodash-es";
-import { toast, includes, remove } from "react-toastify";
-
+import { toast } from "react-toastify";
+import { includes, size } from "lodash";
 const { BASE_PATH, CART } = require("utils/constants");
 
 export function getProductsCart() {
-    const cart = localStorage(CART);
+    const cart = localStorage.getItem(CART);
     if (!cart) {
         return null;
     } else {
@@ -13,20 +12,29 @@ export function getProductsCart() {
         return products;
     }
 }
+
 export function addProductCart(product) {
     const cart = getProductsCart();
+
     if (!cart) {
         localStorage.setItem(CART, product);
-        toast.success("Añadido correctamente");
+        toast.success("Producto añadido al carrito");
     } else {
         const productFound = includes(cart, product);
         if (productFound) {
-            toast.warning('Este producto esta en el carrito');
-
+            toast.warning("Este producto ya esta en el carrito");
         } else {
             cart.push(product);
             localStorage.setItem(CART, cart);
             toast.success("Producto añadido correctamente");
         }
+    }
+}
+export function countProductsCart() {
+    const cart = getProductsCart();
+    if (!cart) {
+        return 0;
+    } else {
+        return size(cart);
     }
 }

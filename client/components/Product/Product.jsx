@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addFavoriteApi, isFavoriteApi, deleteFavoriteApi } from 'api/favorite';
 import useAuth from 'hooks/useAuth';
 import { size } from "lodash-es";
+import useCart from 'hooks/useCart';
 
 export default function Product(props) {
 
@@ -16,6 +17,8 @@ export default function Product(props) {
     const [showImage, setShowImage] = useState(productData.imagen_principal.url);
     const changeImage = (urlImage) => { setShowImage(urlImage); }
     const { auth, logout } = useAuth();
+    const { addProductCart } = useCart();
+    const {  url } = productData;
 
     const addFavorite = async (idProduct) => {
         if (auth) {
@@ -94,7 +97,7 @@ export default function Product(props) {
                                 <input value='1' />
                                 <button className='plus'>+</button>
                             </div>
-                            <button className='btn-add-cart'><FontAwesomeIcon size="lg" icon={faShoppingBasket} />&nbsp;&nbsp;Add to Cart</button>
+                            <button onClick={()=>addProductCart(url)} className='btn-add-cart'><FontAwesomeIcon size="lg" icon={faShoppingBasket} />&nbsp;&nbsp;Add to Cart</button>
                             <FontAwesomeIcon onClick={isFavorite ? () => deleteFavorite(productData.id) : () => addFavorite(productData.id)} style={{ color: isFavorite ? "red" : "black" }} className='btn-add-favorites' icon={faHeart} />
                         </div>
                     </div>

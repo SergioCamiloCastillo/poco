@@ -46,7 +46,7 @@ export default function ListProducts(props) {
                                             </Grid.Column>
                                             <Grid.Column mobile={16} tablet={12} computer={8}>
                                                 <div className='btn-cart'>
-                                                    <FontAwesomeIcon size="1x" icon={faCartPlus} />
+                                                    <FontAwesomeIcon onClick={()=>addProductCart(item.id)} size="1x" icon={faCartPlus} />
                                                 </div>
                                             </Grid.Column>
                                         </Grid>

@@ -1,6 +1,5 @@
 
-import { Grid } from 'semantic-ui-react'
-import { Image as ImageSemantic } from 'semantic-ui-react';
+import { Image as ImageSemantic, Label, Grid } from 'semantic-ui-react';
 import { faPowerOff, faMotorcycle, faSearch, faUser, faHeart, faShoppingBasket, faChevronDown, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Form, Modal, Input } from 'semantic-ui-react'
@@ -13,9 +12,10 @@ import Link from 'next/link'
 import { getCategoryApi } from 'api/category';
 import { map } from 'lodash';
 import { useRouter } from 'next/router';
-
+import useCart from 'hooks/useCart';
 
 export default function Header() {
+    const { productsCart } = useCart();
     const router = useRouter();
     const [load, setLoad] = useState(false);
     const [open, setOpen] = useState(false);
@@ -162,7 +162,7 @@ export default function Header() {
 
 
                             <Link href="/wishlist"><a><FontAwesomeIcon size="lg" icon={faHeart} /></a></Link>
-                            <Link href="/cart"><a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a></Link>
+                            <Link href="/cart"><a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a></Link><span><Label color='red'  circular>{productsCart}</Label></span>
                             {user ? <a onClick={logout}><FontAwesomeIcon size="lg" icon={faPowerOff} /></a> : <a onClick={changeShowModal}><FontAwesomeIcon size="lg" icon={faSignInAlt} /></a>}
 
                         </div>
