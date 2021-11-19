@@ -27,7 +27,6 @@ export default function Header() {
     const [categories, setCategories] = useState([]);
     const [search, setSearch] = useState("");
     const { logout, auth } = useAuth();
-    console.log(search);
     useEffect(() => {
         if (load) {
             router.push(`/search?query=${search}`);
@@ -162,7 +161,7 @@ export default function Header() {
 
 
                             <Link href="/wishlist"><a><FontAwesomeIcon size="lg" icon={faHeart} /></a></Link>
-                            <Link href="/cart"><a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a></Link><span><Label color='red'  circular>{productsCart}</Label></span>
+                            <Link href="/cart"><a><FontAwesomeIcon size="lg" icon={faShoppingBasket} /></a></Link>{productsCart > 0 && <span><Label color='red' circular>{productsCart}</Label></span>}
                             {user ? <a onClick={logout}><FontAwesomeIcon size="lg" icon={faPowerOff} /></a> : <a onClick={changeShowModal}><FontAwesomeIcon size="lg" icon={faSignInAlt} /></a>}
 
                         </div>

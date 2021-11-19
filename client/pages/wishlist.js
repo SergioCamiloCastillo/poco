@@ -10,7 +10,6 @@ import { Loader } from 'semantic-ui-react';
 export default function wishlist() {
     const [products, setProducts] = useState(null);
     const { auth, logout } = useAuth();
-    console.log(useCart());
     if (!auth) { //si no esta logueado
         router.replace("/");
         return null;

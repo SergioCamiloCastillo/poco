@@ -9,7 +9,7 @@ import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/router";
 import BasicLayout from "layouts/BasicLayout/";
-import { getProductsCart, addProductCart, countProductsCart } from "api/cart";
+import { getProductsCart, addProductCart, countProductsCart, removeProductCart } from "api/cart";
 
 
 function MyApp({ Component, pageProps }) {
@@ -22,7 +22,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const token = getToken();
     if (token) {
-      console.log(token);
       setAuth({
         token: token,
         idUser: jwtDecode(token).id
@@ -69,12 +68,16 @@ function MyApp({ Component, pageProps }) {
       toast.warning("Para comprar un producto debe iniciar sesión");
     }
   }
+  const removeProduct = (product) => {
+    removeProductCart(product);
+    setRealoadCart(true);
+  }
   const cartData = useMemo(
     () => ({
       productsCart: totalProductsCart,
       addProductCart: (product) => addProduct(product),
       getProductsCart: getProductsCart,
-      removeProductCart: () => null,
+      removeProductCart: (product) => removeProduct(product),
       removeAllProductsCart: () => null
     }), [totalProductsCart]
   );

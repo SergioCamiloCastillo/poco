@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { includes, size } from "lodash";
+import { includes, size, remove } from "lodash";
 const { BASE_PATH, CART } = require("utils/constants");
 
 export function getProductsCart() {
@@ -36,5 +36,16 @@ export function countProductsCart() {
         return 0;
     } else {
         return size(cart);
+    }
+}
+export function removeProductCart(product) {
+    const cart = getProductsCart();
+    remove(cart, (item) => {
+        return item === product;
+    });
+    if (size(cart) > 0) {
+        localStorage.setItem(CART, cart);
+    } else {
+        localStorage.removeItem(CART);
     }
 }
